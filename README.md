@@ -29,3 +29,5 @@ variables. Common parameters are
 Its implied they are required for each of the specified commands and won't be individually documented in each of them.
 
 
+[DNS](src/Appsco/RackspaceCliBundle/Resources/doc/dns.md)
+[Cloud Files](src/Appsco/RackspaceCliBundle/Resources/doc/cloudFiles.md)

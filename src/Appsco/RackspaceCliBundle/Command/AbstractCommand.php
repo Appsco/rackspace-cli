@@ -12,6 +12,10 @@ use Symfony\Component\Console\Input\InputOption;
 
 abstract class AbstractCommand extends ContainerAwareCommand
 {
+    /** @var  Rackspace */
+    private $client;
+
+
     protected function configure()
     {
         $this
@@ -52,12 +56,14 @@ abstract class AbstractCommand extends ContainerAwareCommand
      */
     protected function getRackspaceClient(RackspaceInfo $info)
     {
-        $client = new Rackspace(Rackspace::UK_IDENTITY_ENDPOINT, array(
-            'username' => $info->getUsername(),
-            'apiKey' => $info->getApiKey()
-        ));
+        if (!$this->client) {
+            $this->client = new Rackspace(Rackspace::UK_IDENTITY_ENDPOINT, array(
+                'username' => $info->getUsername(),
+                'apiKey' => $info->getApiKey()
+            ));
+        }
 
-        return $client;
+        return $this->client;
     }
 
 
@@ -70,6 +76,17 @@ abstract class AbstractCommand extends ContainerAwareCommand
         $client = $this->getRackspaceClient($info);
 
         return $client->dnsService(null, $info->getRegion(), $info->getUsePublicUrl() ? 'publicURL' : 'internalURL');
+    }
+
+    /**
+     * @param RackspaceInfo $info
+     * @return \OpenCloud\ObjectStore\Service
+     */
+    protected function getFilesService(RackspaceInfo $info)
+    {
+        $client = $this->getRackspaceClient($info);
+
+        return $client->objectStoreService(null, $info->getRegion(), $info->getUsePublicUrl() ? 'publicURL' : 'internalURL');
     }
 
 

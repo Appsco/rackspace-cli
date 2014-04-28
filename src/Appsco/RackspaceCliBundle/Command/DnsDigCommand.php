@@ -2,7 +2,6 @@
 
 namespace Appsco\RackspaceCliBundle\Command;
 
-use Appsco\RackspaceCliBundle\Model\RackspaceInfo;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -43,15 +42,6 @@ class DnsDigCommand extends AbstractCommand
             $output->writeln(sprintf("%s\t%s", $domain->id, $domain->name));
 
             $recordList = $domain->recordList();
-
-//            $maxNameLen = 0;
-//            foreach ($recordList as $record) {
-//                $len = strlen($record->name);
-//                if ($len > $maxNameLen) {
-//                    $maxNameLen = $len;
-//                }
-//            }
-//            $maxNameLen += 3;
 
             foreach ($recordList as $record) {
                 if (!$recordType || $recordType == $record->type) {
