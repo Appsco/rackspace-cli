@@ -1,0 +1,2 @@
+#! /bin/bash
+php /srv/backup/scripts/rackspace-cli/app/console appsco:rackspace:files:file:upload $@
