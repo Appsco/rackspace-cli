@@ -28,9 +28,20 @@ class FilesContainerListCommand extends AbstractCommand
 
         /** @var \OpenCloud\ObjectStore\Resource\Container $container */
 
+        $output->writeln(sprintf('%-20s%-20s%-20s%s',
+            'bytes',
+            'quota',
+            'objects',
+            'name'
+        ));
         foreach ($containerList as $container)
         {
-            $output->writeln(sprintf('%s', $container->name));
+            $output->writeln(sprintf('%-20s%-20s%s',
+                $container->getBytesUsed(),
+                $container->getBytesQuota(),
+                $container->getObjectCount(),
+                $container->name
+            ));
         }
     }
 
