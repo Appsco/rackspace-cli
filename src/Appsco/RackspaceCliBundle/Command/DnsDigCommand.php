@@ -45,8 +45,7 @@ class DnsDigCommand extends AbstractCommand
 
             foreach ($recordList as $record) {
                 if (!$recordType || $recordType == $record->type) {
-                    //$output->writeln(sprintf("\t%s\t%s\t%s\t%s\t%s",
-                    $output->writeln(sprintf("%18s%45s%10s%10s   %s%s",
+                    $output->writeln(sprintf("%-18s%-45s%-10s%-10s   %s%s",
                         $record->id,
                         $record->name,
                         $record->type,
