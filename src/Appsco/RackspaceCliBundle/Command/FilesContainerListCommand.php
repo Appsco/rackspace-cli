@@ -36,7 +36,7 @@ class FilesContainerListCommand extends AbstractCommand
         ));
         foreach ($containerList as $container)
         {
-            $output->writeln(sprintf('%-20s%-20s%s',
+            $output->writeln(sprintf('%-20s%-20s%-20s%s',
                 $container->getBytesUsed(),
                 $container->getBytesQuota(),
                 $container->getObjectCount(),
