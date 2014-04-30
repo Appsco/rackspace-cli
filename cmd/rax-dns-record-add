@@ -1,2 +1,2 @@
 #! /bin/bash
-php /srv/backup/scripts/rackspace-cli/app/console appsco:rackspace:dns:record:add $@
+php /srv/backup/scripts/rackspace-cli/app/console --env=prod appsco:rackspace:dns:record:add $@

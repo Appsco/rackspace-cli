@@ -1,2 +1,2 @@
 #! /bin/bash
-php /srv/backup/scripts/rackspace-cli/app/console appsco:rackspace:files:file:list $@
+php /srv/backup/scripts/rackspace-cli/app/console --env=prod appsco:rackspace:files:file:list $@
