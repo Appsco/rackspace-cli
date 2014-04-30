@@ -1,2 +1,3 @@
 #! /bin/bash
-php rax.php appsco:rackspace:dns:record:add $@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+php $DIR/rax.php appsco:rackspace:dns:record:add $@
