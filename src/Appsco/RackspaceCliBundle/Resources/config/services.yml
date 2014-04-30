@@ -1,8 +1,0 @@
-parameters:
-#    appsco_rackspace_cli.example.class: Appsco\RackspaceCliBundle\Example
-
-services:
-
-    appsco_rackspace_cli.rackspace_info_provider:
-        class: Appsco\RackspaceCliBundle\Service\RackspaceInfoProvider
-

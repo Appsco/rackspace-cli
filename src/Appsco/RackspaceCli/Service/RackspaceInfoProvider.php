@@ -1,8 +1,8 @@
 <?php
 
-namespace Appsco\RackspaceCliBundle\Service;
+namespace Appsco\RackspaceCli\Service;
 
-use Appsco\RackspaceCliBundle\Model\RackspaceInfo;
+use Appsco\RackspaceCli\Model\RackspaceInfo;
 
 class RackspaceInfoProvider
 {

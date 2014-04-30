@@ -15,4 +15,3 @@ app/config/parameters.yml
 # Composer
 composer.phar
 /.idea
-/bin

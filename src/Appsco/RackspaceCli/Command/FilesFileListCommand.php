@@ -1,24 +1,22 @@
 <?php
 
-namespace Appsco\RackspaceCliBundle\Command;
+namespace Appsco\RackspaceCli\Command;
 
-use OpenCloud\ObjectStore\Upload\ConsecutiveTransfer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
-class FilesFileCurlCommand extends AbstractCommand
+class FilesFileListCommand extends AbstractCommand
 {
     protected function configure()
     {
         parent::configure();
 
-        $this->setName('appsco:rackspace:files:file:curl')
-            ->addArgument('container', InputArgument::REQUIRED, 'Container name')
-            ->addArgument('name', InputArgument::REQUIRED, 'Name of file in container to download')
-            ->addArgument('filename', InputArgument::OPTIONAL, 'Filename to save downloaded file to, defaults to STDOUT')
+        $this->setName('appsco:rackspace:files:file:list')
+            ->addArgument('container', InputArgument::REQUIRED)
+            ->addArgument('filter', InputArgument::OPTIONAL, 'Prefix')
+            ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Limit')
         ;
     }
 
@@ -45,33 +43,23 @@ class FilesFileCurlCommand extends AbstractCommand
             throw new \InvalidArgumentException(sprintf("Container '%s' not found", $containerName));
         }
 
-        $name = $input->getArgument('name');
-        /** @var \Guzzle\Http\Url $url */
-        $url = $container->getUrl($name);
-        $token = $container->getClient()->getToken();
+        $query = $this->getQuery($input);
 
-        $output->writeln($token);
-        $output->writeln((string)$url);
-        $output->writeln('');
+        $fileList = $container->objectList($query);
 
-        $cmd = sprintf("curl -H \"X-Auth-Token: %s\"  %s", $token, (string)$url);
+        $output->writeln(sprintf("%s: %s files", $containerName, $fileList->count()));
 
-        $filename = $input->getArgument('filename');
-        if ($filename) {
-            $cmd .= ' > '.$filename;
+        /** @var \OpenCloud\ObjectStore\Resource\DataObject $file */
+
+        foreach ($fileList as $file)
+        {
+            $output->writeln(sprintf('%-15s%-20s%-20s%s',
+                $file->getContentLength(),
+                $file->getContentType(),
+                $file->getContainer()->getName(),
+                $file->getName()
+            ));
         }
-
-        $output->writeln($cmd);
-        $output->writeln('');
-
-        $process = new Process($cmd);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
-
-        print $process->getOutput();
     }
 
 

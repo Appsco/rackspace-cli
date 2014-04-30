@@ -2,7 +2,7 @@
     "name": "appsco/rackspace-cli",
     "license": "MIT",
     "type": "project",
-    "description": "Rackspace API cli client",
+    "description": "Rackspace API cli PHP client",
     "autoload": {
         "psr-0": { "": "src/" }
     },
@@ -11,47 +11,13 @@
     ],
     "require": {
         "php": ">=5.4.1",
-        "symfony/symfony": "2.4.2",
-        "doctrine/orm": "2.4.2",
-        "doctrine/doctrine-bundle": "1.2.0",
-        "twig/extensions": "1.0.1",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "v2.3.5",
-        "symfony/monolog-bundle": "2.5.0",
-        "sensio/distribution-bundle": "2.3.4",
-        "sensio/framework-extra-bundle": "3.0.0",
-        "sensio/generator-bundle": "2.3.4",
-        "incenteev/composer-parameter-handler": "2.1.0",
-
+        "symfony/console": "~2.4",
+        "symfony/finder": "~2.4",
         "rackspace/php-opencloud": "dev-RegionLessCatalogService"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
-        ],
-        "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
-        ]
     },
     "config": {
         "bin-dir": "bin"
     },
     "prefer-stable": true,
-    "minimum-stability": "stable",
-    "extra": {
-        "symfony-app-dir": "app",
-        "symfony-web-dir": "web",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.4-dev"
-        }
-    }
+    "minimum-stability": "stable"
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Appsco\RackspaceCliBundle\Model;
+namespace Appsco\RackspaceCli\Model;
 
 class RackspaceInfo 
 {

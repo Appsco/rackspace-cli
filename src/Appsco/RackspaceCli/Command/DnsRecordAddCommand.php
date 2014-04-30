@@ -1,6 +1,6 @@
 <?php
 
-namespace Appsco\RackspaceCliBundle\Command;
+namespace Appsco\RackspaceCli\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

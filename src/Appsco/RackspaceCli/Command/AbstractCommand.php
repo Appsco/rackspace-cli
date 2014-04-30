@@ -1,19 +1,41 @@
 <?php
 
-namespace Appsco\RackspaceCliBundle\Command;
+namespace Appsco\RackspaceCli\Command;
 
-use Appsco\RackspaceCliBundle\Model\RackspaceInfo;
-use Appsco\RackspaceCliBundle\Service\RackspaceInfoProvider;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Appsco\RackspaceCli\Model\RackspaceInfo;
+use Appsco\RackspaceCli\Service\RackspaceInfoProvider;
 use OpenCloud\Rackspace;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 
-abstract class AbstractCommand extends ContainerAwareCommand
+abstract class AbstractCommand extends Command
 {
+    /** @var  RackspaceInfoProvider */
+    protected $rackspaceInfoProvider;
+
     /** @var  Rackspace */
     private $client;
+
+
+
+    /**
+     * @param \Appsco\RackspaceCli\Service\RackspaceInfoProvider $rackspaceInfoProvider
+     */
+    public function setRackspaceInfoProvider(RackspaceInfoProvider $rackspaceInfoProvider)
+    {
+        $this->rackspaceInfoProvider = $rackspaceInfoProvider;
+    }
+
+    /**
+     * @return \Appsco\RackspaceCli\Service\RackspaceInfoProvider
+     */
+    public function getRackspaceInfoProvider()
+    {
+        return $this->rackspaceInfoProvider;
+    }
+
 
 
     protected function configure()
@@ -39,15 +61,6 @@ abstract class AbstractCommand extends ContainerAwareCommand
     }
 
 
-    /**
-     * @return RackspaceInfoProvider
-     */
-    protected function getRackspaceInfoProvider()
-    {
-        $provider = $this->getContainer()->get('appsco_rackspace_cli.rackspace_info_provider');
-
-        return $provider;
-    }
 
 
     /**
