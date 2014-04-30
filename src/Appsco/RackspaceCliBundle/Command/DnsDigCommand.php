@@ -44,7 +44,7 @@ class DnsDigCommand extends AbstractCommand
             $recordList = $domain->recordList();
 
             foreach ($recordList as $record) {
-                if (!$recordType || $recordType == $record->type) {
+                if (!$recordType || in_array($recordType, array('?', '*', '.')) || $recordType == $record->type) {
                     $output->writeln(sprintf("%-18s%-45s%-10s%-10s   %s%s",
                         $record->id,
                         $record->name,
@@ -78,7 +78,7 @@ class DnsDigCommand extends AbstractCommand
         }
 
         $domainName = $input->getArgument('domain');
-        if ($domainName) {
+        if ($domainName && !in_array($domainName, array('?', '*', '.'))) {
             $query['name'] = $domainName;
         }
 
