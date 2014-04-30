@@ -1,2 +1,2 @@
 #! /bin/bash
-php /srv/backup/scripts/rackspace-cli/app/console --env=prod appsco:rackspace:dns:dig $@
+php rax.php appsco:rackspace:dns:dig $@
