@@ -27,24 +27,38 @@ class FilesFileListCommand extends AbstractCommand
         $containerName = $input->getArgument('container');
 
         /** @var \OpenCloud\Common\Collection $containerList */
-        $containerList = $service->listContainers(array('name'=>$containerName));
-
-        if ($containerList->count() < 1) {
-            throw new \InvalidArgumentException(sprintf("Container '%s' not found", $containerName));
-        }
+        $containerList = $service->listContainers(array('prefix'=>$containerName));
 
         /** @var \OpenCloud\ObjectStore\Resource\Container $container */
-        $container = $containerList->first();
+        $container = null;
+
+        foreach ($containerList as $c) {
+            if ($c->getName() == $containerName) {
+                $container = $c;
+                break;
+            }
+        }
+
+        if (!$container) {
+            throw new \InvalidArgumentException(sprintf("Container '%s' not found", $containerName));
+        }
 
         $query = $this->getQuery($input);
 
         $fileList = $container->objectList($query);
 
+        $output->writeln(sprintf("%s: %s files", $containerName, $fileList->count()));
+
         /** @var \OpenCloud\ObjectStore\Resource\DataObject $file */
 
         foreach ($fileList as $file)
         {
-            $output->writeln(sprintf('%s', $file->getName()));
+            $output->writeln(sprintf('%-15s%-20s%-20s%s',
+                $file->getContentLength(),
+                $file->getContentType(),
+                $file->getContainer()->getName(),
+                $file->getName()
+            ));
         }
     }
 
